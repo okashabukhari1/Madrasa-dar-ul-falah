@@ -1,0 +1,119 @@
+:root{
+  --bg:#f6f3ec;        /* page background */
+  --ink:#1d2350;       /* text */
+  --indigo:#4d5aa8;    /* single accent, taken from the brochure */
+  --w:min(44vw, calc(86vh / 1.414), 560px);   /* one page width */
+  --h:calc(var(--w) * 1.414);
+  --ease:cubic-bezier(.45,.05,.25,1);
+}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{
+  font-family:'Noto Naskh Arabic',serif;color:var(--ink);background:var(--bg);
+  min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;
+}
+body.is-loading{overflow:hidden}
+
+/* ---------- loader ---------- */
+#loader{
+  position:fixed;inset:0;z-index:99;display:grid;place-content:center;justify-items:center;gap:1.2rem;
+  background:var(--bg);transition:opacity .7s ease,visibility .7s;
+}
+#loader.done{opacity:0;visibility:hidden}
+.loader-logo{position:relative;width:clamp(130px,26vw,190px);aspect-ratio:1}
+.loader-logo img{position:absolute;inset:9%;width:82%;height:82%;object-fit:cover;border-radius:50%;animation:breathe 2.2s ease-in-out infinite}
+.loader-logo svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 1.6s linear infinite}
+.loader-logo circle{fill:none;stroke:var(--indigo);stroke-width:2;stroke-linecap:round;stroke-dasharray:90 210}
+.loader-name{font-family:'Noto Nastaliq Urdu',serif;font-size:1.6rem;font-weight:700;line-height:2}
+.loader-bar{width:min(240px,60vw);height:3px;background:#dcd8cc;border-radius:3px;overflow:hidden}
+.loader-bar span{display:block;height:100%;width:0;background:var(--indigo);transition:width .3s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{50%{transform:scale(.94)}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:1rem;padding:1rem clamp(1rem,4vw,3rem)}
+.top-logo{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.top h1{font-family:'Noto Nastaliq Urdu',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.9}
+.top p{font-size:.95rem;opacity:.7}
+
+/* ---------- book ---------- */
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.5rem 1rem 1.2rem;gap:1.1rem}
+.book-wrap{perspective:2600px;padding:0 0 10px}
+.book{
+  position:relative;width:calc(var(--w) * 2);height:var(--h);
+  transform-style:preserve-3d;transition:transform .9s var(--ease);
+}
+
+/* Urdu book: spine in the middle, unread pages stacked on the left, turning to the right */
+.sheet,.back-cover{position:absolute;top:0;left:0;width:var(--w);height:var(--h)}
+.sheet{
+  transform-origin:right center;transform-style:preserve-3d;
+  transition:transform 1s var(--ease);cursor:pointer;
+  translate:0 0 var(--z,0px);
+}
+.sheet.flipped{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;overflow:hidden;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+}
+.face img{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.face.back{transform:rotateY(180deg)}
+.face::after{content:"";position:absolute;inset:0;pointer-events:none;background:transparent}
+.face.front{border-radius:4px 0 0 4px;box-shadow:-3px 4px 14px rgba(29,35,80,.25)}
+.face.back{border-radius:0 4px 4px 0;box-shadow:3px 4px 14px rgba(29,35,80,.25)}
+.sheet.flipped .face.front,.sheet:not(.flipped) .face.back{box-shadow:none}
+
+/* flat shade while a page is turning */
+.sheet.turning .face::after{animation:shade 1s var(--ease)}
+@keyframes shade{50%{background:rgba(29,35,80,.18)}}
+
+.back-cover{
+  display:grid;place-items:center;border-radius:4px 0 0 4px;background:var(--indigo);
+  box-shadow:-3px 4px 14px rgba(29,35,80,.25);
+}
+.back-cover img,.plain img{width: 250px; height: 250px; border-radius:50%}
+.plain{display:grid;place-items:center;background:var(--indigo)}
+
+/* ---------- controls ---------- */
+.controls{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center}
+.controls button{
+  font:600 1.05rem 'Noto Naskh Arabic',serif;color:#fff;background:var(--indigo);
+  border:0;border-radius:6px;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s,opacity .2s;
+}
+.controls button:hover:not(:disabled){background:var(--ink)}
+.controls button:disabled{opacity:.35;cursor:not-allowed}
+.controls button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.arr{font-size:.8em}
+#status{min-width:8rem;text-align:center;font-size:1.1rem;font-weight:600}
+.hint{font-size:.9rem;opacity:.6;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  .book,.sheet{transition-duration:.01s}
+  .loader-logo svg,.loader-logo img{animation:none}
+}
+
+/* ---------- mobile: single full-screen page ---------- */
+.single-wrap{display:none}
+.leaf{
+  position:absolute;inset:0;transform-origin:right center;transform-style:preserve-3d;
+  transition:transform .9s var(--ease);translate:0 0 var(--z,0px);cursor:pointer;
+}
+.leaf.flipped{transform:rotateY(180deg)}
+.leaf .face{border-radius:0;box-shadow:none}
+.leaf .face.back{background:var(--bg)}
+.leaf.turning .face::after{animation:shade .9s var(--ease)}
+
+@media (max-width:800px){
+  :root{--w:100vw;--bar:64px}
+  @supports (height:100dvh){:root{--w:min(100vw, calc((100dvh - var(--bar)) / 1.414))}}
+  body{overflow:hidden;height:100vh;height:100dvh}
+  .top,.hint,.book-wrap{display:none}
+  .stage{padding:0 0 var(--bar);gap:0;justify-content:center;overflow:hidden}
+  .single-wrap{display:block;perspective:1800px;width:100%;display:flex;justify-content:center}
+  .single{position:relative;width:var(--w);height:var(--h);transform-style:preserve-3d}
+  .controls{
+    position:fixed;left:0;right:0;bottom:0;height:var(--bar);z-index:5;
+    background:var(--bg);border-top:1px solid #dcd8cc;flex-wrap:nowrap;gap:.5rem;padding:0 .75rem;
+  }
+  .controls button{padding:.45rem .9rem;font-size:.95rem}
+  #status{min-width:0;flex:1;font-size:1rem}
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مدرسہ دار الفلاح</title>
+<link rel="icon" href="images/madrasa-dar-ul-falah-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-loading">
+
+<div id="loader" role="status" aria-label="لوڈ ہو رہا ہے">
+  <div class="loader-logo">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47"/></svg>
+    <img src="images/madrasa-dar-ul-falah-logo.jpg" alt="مدرسہ دار الفلاح کا لوگو">
+  </div>
+  <p class="loader-name">مدرسہ دار الفلاح</p>
+  <div class="loader-bar"><span id="loaderBar"></span></div>
+</div>
+
+<header class="top">
+  <img src="images/madrasa-dar-ul-falah-logo.jpg" alt="" class="top-logo">
+  <div>
+    <h1>مدرسہ دار الفلاح</h1>
+    <p>بی-19، فردوس کالونی، کراچی</p>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="book-wrap" id="bookWrap">
+    <div class="book" id="book" data-state="0">
+      <div class="back-cover"><img src="images/madrasa-dar-ul-falah-logo.jpg" alt=""></div>
+
+      <div class="sheet" data-i="0">
+        <div class="face front plain"><img src="images/madrasa-dar-ul-falah-logo.jpg" alt="مدرسہ دار الفلاح"></div>
+        <div class="face back"><img src="images/Artboard 1 copy 4@4x-100.jpg" alt="تعارفِ ادارہ، تاسیس و بانی، روحانی نسبت اور مقاصد"></div>
+      </div>
+      <div class="sheet" data-i="1">
+        <div class="face front"><img src="images/Artboard 1 copy 5@4x-100.jpg" alt="تعلیمی سرگرمیاں"></div>
+        <div class="face back"><img src="images/Artboard 1 copy 6@4x-100.jpg" alt="تعلیمی سرگرمیاں اور مستقبل کے اہداف"></div>
+      </div>
+      <div class="sheet" data-i="2">
+        <div class="face front"><img src="images/Artboard 1 copy 7@4x-100.jpg" alt="غیر تعلیمی سرگرمیاں، رفاہی و فلاحی سرگرمیاں"></div>
+        <div class="face back plain"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile: one page at a time, full screen -->
+  <div class="single-wrap" id="singleWrap">
+    <div class="single" id="single">
+      <div class="leaf" data-i="0"><div class="face front plain"><img src="images/madrasa-dar-ul-falah-logo.jpg" alt="مدرسہ دار الفلاح"></div><div class="face back"></div></div>
+      <div class="leaf" data-i="1"><div class="face front"><img src="images/Artboard 1 copy 4@4x-100.jpg" alt="تعارفِ ادارہ"></div><div class="face back"></div></div>
+      <div class="leaf" data-i="2"><div class="face front"><img src="images/Artboard 1 copy 5@4x-100.jpg" alt="تعلیمی سرگرمیاں"></div><div class="face back"></div></div>
+      <div class="leaf" data-i="3"><div class="face front"><img src="images/Artboard 1 copy 6@4x-100.jpg" alt="تعلیمی سرگرمیاں اور اہداف"></div><div class="face back"></div></div>
+      <div class="leaf" data-i="4"><div class="face front"><img src="images/Artboard 1 copy 7@4x-100.jpg" alt="رفاہی و فلاحی سرگرمیاں"></div><div class="face back"></div></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="prevBtn" type="button"><span class="arr">❯</span> پچھلا صفحہ</button>
+    <span id="status" aria-live="polite">سرورق</span>
+    <button id="nextBtn" type="button">اگلا صفحہ <span class="arr">❮</span></button>
+  </div>
+  <p class="hint">صفحے پر کلک کریں، بٹن دبائیں یا سوائپ کریں۔</p>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
